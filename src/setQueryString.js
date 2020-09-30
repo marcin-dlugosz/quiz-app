@@ -1,14 +1,13 @@
-const setQueryString = (e, quizURL)=> {
-    const url = new URL(quizURL);
-    const params = new URLSearchParams(url.search);
-    if (e.target.value !== "") {
-      params.set(e.target.name, e.target.value);
+const setQueryString = (e, quizUrl) => {
+    const url = new URL(quizUrl)
+    const params = new URLSearchParams(url.search)
+    if (e.target.value !== '') {
+        params.set(e.target.name, e.target.value)
     } else {
-      params.delete(e.target.name);
+        params.delete(e.target.name)
     }
-    const appendedParams = params.toString();
-    quizURL = `https://opentdb.com/api.php?${appendedParams}`;
-    console.log(quizURL);
-} 
+    const appendedParams = params.toString()
+    return appendedParams
+}
 
 export default setQueryString
