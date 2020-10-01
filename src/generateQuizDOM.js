@@ -22,6 +22,10 @@ const generateQuizDOM = (quizObj, index, questionCounter, quizStartedAt) => {
     nextQuestionBtn.addEventListener('click', () => {
         prevQuestionBtn.style.display = 'inline-block'
         quizObj.incrementCorrectAnsCounter()
+        if (index === quizLength - 2) {
+            // Changing the button's name when last question shown
+            nextQuestionBtn.textContent = 'Finish & go to score'
+        }
         if (index < quizLength - 1) {
             answersList.innerHTML = ''
             index++
@@ -36,14 +40,10 @@ const generateQuizDOM = (quizObj, index, questionCounter, quizStartedAt) => {
                 <p>Time it took: ${calculateDuration(quizStartedAt)}</p>`
             quizObj.correctAnswersCounter = 0
         }
-        if (index === quizLength - 2) {
-            // Changing the button's name when last question shown
-            nextQuestionBtn.textContent = 'Finish & go to score'
-        }
     })
 
     prevQuestionBtn.addEventListener('click', () => {
-        if (index < quizLength - 1) {
+        if (index <= quizLength - 1) {
             answersList.innerHTML = ''
             index--
             questionCounter--
@@ -52,7 +52,9 @@ const generateQuizDOM = (quizObj, index, questionCounter, quizStartedAt) => {
             getPossibleAnswers(quizObj, index, answersList)
         }
         quizObj.incrementCorrectAnsCounter()
-
+        if (index !== quizLength - 1) {
+            nextQuestionBtn.textContent = 'Next Question'
+        }
         if (index === 0) {
             prevQuestionBtn.style.display = 'none'
         }
