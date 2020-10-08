@@ -1,4 +1,4 @@
-const setQueryString = (e, quizUrl) => {
+const modifyURL = (e, quizUrl) => {
     const url = new URL(quizUrl)
     const params = new URLSearchParams(url.search)
     if (e.target.value !== '') {
@@ -10,4 +10,4 @@ const setQueryString = (e, quizUrl) => {
     return appendedParams
 }
 
-export default setQueryString
+export default modifyURL

@@ -1,7 +1,7 @@
 class QuizGame {
     constructor(quiz) {
         this.quiz = quiz
-        this.correctAnswer = ''
+        this.correctAnswer = []
         this.correctAnswersCounter = 0
     }
 
@@ -12,7 +12,7 @@ class QuizGame {
             const index = Math.ceil(Math.random() * possibleAnswersArr.length)
             possibleAnswersArr.splice(index - 1, 0, obj.correct_answer)
             possibleAnswersArr.forEach((possAns) => {
-                obj.possibleAnswers.push({ name: possAns, marked: false })
+                obj.possibleAnswers.push({ name: possAns, isChecked: false })
             })
         })
     }
@@ -28,6 +28,8 @@ class QuizGame {
         if (this.correctAnswer) {
             this.correctAnswersCounter++
             this.correctAnswer = ''
+        }else {
+            this.correctAnswersCounter--
         }
     }
 }

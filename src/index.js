@@ -1,18 +1,18 @@
 import getQuiz from './quizRequest.js'
 import QuizGame from './quizObj.js'
-import setQueryString from './setQueryString.js'
+import modifyURL from './modifyURL.js'
 import renderQuiz from './renderQuiz.js'
 
 let newQuiz
-let quizURL = 'https://opentdb.com/api.php?amount=10'
+let quizOptionsURL = 'https://opentdb.com/api.php?amount=10'
 const quizContainer = document.querySelector('#quiz')
 
-document.querySelector('#selectionFields').addEventListener('change', (e) => {
-    quizURL = `https://opentdb.com/api.php?${setQueryString(e, quizURL)}`
+document.querySelector('#selectFieldsWrapper').addEventListener('change', (e) => {
+    quizOptionsURL = `https://opentdb.com/api.php?${modifyURL(e, quizOptionsURL)}`
 })
 
 const startQuiz = async () => {
-    const quiz = await getQuiz(quizURL)
+    const quiz = await getQuiz(quizOptionsURL)
     if (quiz.response_code === 1) {
         quizContainer.innerHTML =
             'Unfortunately we could not find any quiz matching your criteria. Please select different option from drop down menu'

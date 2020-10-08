@@ -18,7 +18,7 @@ const getPossibleAnswers = (quizObj, index, list) => {
         // Radio button event for possible answers
         input.addEventListener('change', (e) => {
             possibleAnsArray.forEach((answer) => {
-                answer.marked = false
+                answer.isChecked = false
             })
             quizObj.setCorrectAns(e, index)
 
@@ -26,11 +26,11 @@ const getPossibleAnswers = (quizObj, index, list) => {
                 return e.target.value === ans.name
             })
             if (answerObj) {
-                answerObj.marked = e.target.checked
+                answerObj.isChecked = e.target.checked
             }
         })
 
-        const markedAns = possibleAnsArray.find((ansObj) => ansObj.marked)
+        const markedAns = possibleAnsArray.find((ansObj) => ansObj.isChecked)
         if (!markedAns) {
             return
         } else if (input.value === markedAns.name) {
