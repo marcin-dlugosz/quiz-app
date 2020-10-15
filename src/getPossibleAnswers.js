@@ -1,6 +1,6 @@
 const getPossibleAnswers = (quizObj, index, list) => {
     const possibleAnsArray = quizObj.quiz[index].possibleAnswers
-   
+
     // Generate possible answers DOM
     possibleAnsArray.forEach(({ name }) => {
         const listItem = document.createElement('li')
@@ -14,13 +14,14 @@ const getPossibleAnswers = (quizObj, index, list) => {
         input.value = name
         listItem.append(input, label)
         list.append(listItem)
-        
+
         // Radio button event for possible answers
         input.addEventListener('change', (e) => {
             possibleAnsArray.forEach((answer) => {
                 answer.isChecked = false
             })
-            quizObj.setCorrectAns(e, index)
+            quizObj.addAnswers(e, index)
+            console.log(quizObj.answers)
 
             const answerObj = possibleAnsArray.find((ans) => {
                 return e.target.value === ans.name
@@ -30,17 +31,17 @@ const getPossibleAnswers = (quizObj, index, list) => {
             }
         })
 
-        const markedAns = possibleAnsArray.find((ansObj) => ansObj.isChecked)
-        if (!markedAns) {
+        const checkedAns = possibleAnsArray.find((ansObj) => ansObj.isChecked)
+        if (!checkedAns) {
             return
-        } else if (input.value === markedAns.name) {
+        } else if (input.value === checkedAns.name) {
             const list = Array.from(
                 document.querySelectorAll('input[type=radio')
             )
-            const checkedAns = list.find((item) => {
-                return item.defaultValue === markedAns.name
+            const checkedAnswer = list.find((item) => {
+                return item.defaultValue === checkedAns.name
             })
-            checkedAns.setAttribute('checked', 'checked')
+            checkedAnswer.setAttribute('checked', 'checked')
         }
     })
 }

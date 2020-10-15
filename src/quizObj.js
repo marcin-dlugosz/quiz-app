@@ -1,36 +1,34 @@
 class QuizGame {
     constructor(quiz) {
         this.quiz = quiz
-        this.correctAnswer = []
-        this.correctAnswersCounter = 0
+        this.answers = []
     }
 
     createPossibleAnswersArr() {
         this.quiz.forEach((obj) => {
             obj.possibleAnswers = []
             const possibleAnswersArr = [...obj.incorrect_answers]
-            const index = Math.ceil(Math.random() * possibleAnswersArr.length)
-            possibleAnswersArr.splice(index - 1, 0, obj.correct_answer)
-            possibleAnswersArr.forEach((possAns) => {
-                obj.possibleAnswers.push({ name: possAns, isChecked: false })
+            const index = Math.floor(Math.random() * (possibleAnswersArr.length + 1))
+
+            possibleAnswersArr.splice(index, 0, obj.correct_answer)
+            possibleAnswersArr.forEach((answer) => {
+                obj.possibleAnswers.push({ name: answer, isChecked: false })
             })
         })
     }
 
-    setCorrectAns(e, index) {
-        if (e.target.value === this.quiz[index].correct_answer) {
-            this.correctAnswer = e.target.value
+    addAnswers(e, index) {
+        const selectedAnswer = e.target.value
+        if (selectedAnswer === this.quiz[index].correct_answer) {
+            this.answers[index] = { name: selectedAnswer, isCorrect: true }
         } else {
-            this.correctAnswer = ''
+            this.answers[index] = { name: selectedAnswer, isCorrect: false }
         }
     }
-    incrementCorrectAnsCounter () {
-        if (this.correctAnswer) {
-            this.correctAnswersCounter++
-            this.correctAnswer = ''
-        }else {
-            this.correctAnswersCounter--
-        }
+
+    retrieveCorrectAnswers() {
+        const correctAnswers = this.answers.filter((answer) => answer.isCorrect)
+        return correctAnswers
     }
 }
 
