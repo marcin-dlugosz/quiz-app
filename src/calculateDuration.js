@@ -5,7 +5,11 @@ const calculateDuration = (startedAt) => {
         const minutes = seconds / 60
         const fullMinutes = Math.floor(minutes)
         const extractedSeconds = `${((minutes - fullMinutes) * 60).toFixed(0)}`
-        duration = `${fullMinutes} minute(s) ${extractedSeconds} second(s)`
+        const formOfMinute =
+            fullMinutes < 2 ? 1 + ' minute' : fullMinutes + ' minutes'
+        const formOfSecond =
+            extractedSeconds < 2 ? 1 + ' second' : extractedSeconds + ' seconds'
+        duration = `${formOfMinute} ${formOfSecond}`
     } else {
         duration = Math.floor(seconds) + ' seconds'
     }

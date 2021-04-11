@@ -1,5 +1,7 @@
-const getPossibleAnswers = (quizObj, index, list) => {
-    const possibleAnsArray = quizObj.quiz[index].possibleAnswers
+import addAnswers from './addAnswers.js'
+
+const getPossibleAnswers = (quiz, index, answers, list) => {
+    const possibleAnsArray = quiz[index].possibleAnswers
 
     // Generate possible answers DOM
     possibleAnsArray.forEach(({ name }) => {
@@ -17,32 +19,53 @@ const getPossibleAnswers = (quizObj, index, list) => {
 
         // Radio button event for possible answers
         input.addEventListener('change', (e) => {
+            addAnswers(e, quiz, index, answers)
+            const answerLabels = Array.from(
+                document.querySelectorAll('li label')
+            )
+            
+            answerLabels.forEach((label) => {
+                // highlight an answer text when specific answer is checked
+                if (e.target.value === label.htmlFor) {
+                    label.className = 'highlight'
+                } else {
+                    label.className = ''
+                }
+            })
             possibleAnsArray.forEach((answer) => {
-                answer.isChecked = false
+                // reset isChecked property of a checked answer to false when other answer is checked
+                if (answer.isChecked) {
+                    answer.isChecked = false
+                }
+                if (e.target.value === answer.name) {
+                    answer.isChecked = e.target.checked
+                }
             })
-            quizObj.addAnswers(e, index)
-            console.log(quizObj.answers)
-
-            const answerObj = possibleAnsArray.find((ans) => {
-                return e.target.value === ans.name
-            })
-            if (answerObj) {
-                answerObj.isChecked = e.target.checked
-            }
         })
-
-        const checkedAns = possibleAnsArray.find((ansObj) => ansObj.isChecked)
-        if (!checkedAns) {
+        // Keep an answer checked and highlighted when moving between questions
+        const checkedAnswer = possibleAnsArray.find(
+            (ansObj) => ansObj.isChecked
+        )
+        if (!checkedAnswer) {
             return
-        } else if (input.value === checkedAns.name) {
-            const list = Array.from(
+        } else if (input.value === checkedAnswer.name) {
+            const radioButtons = Array.from(
                 document.querySelectorAll('input[type=radio')
             )
-            const checkedAnswer = list.find((item) => {
-                return item.defaultValue === checkedAns.name
+            const selectedBtn = radioButtons.find((item) => {
+                return item.defaultValue === checkedAnswer.name
             })
-            checkedAnswer.setAttribute('checked', 'checked')
+            const answerLabels = Array.from(
+                document.querySelectorAll('li label')
+            )
+            const selectedAnswer = answerLabels.find((label) => {
+                return checkedAnswer.name === label.htmlFor
+            })
+            selectedAnswer.setAttribute('class', 'highlight')
+            selectedBtn.setAttribute('checked', 'checked')
         }
     })
+
 }
+
 export default getPossibleAnswers

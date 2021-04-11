@@ -3,10 +3,12 @@ const modifyURL = (e, quizUrl) => {
     const params = new URLSearchParams(url.search)
     if (e.target.value !== '') {
         params.set(e.target.name, e.target.value)
-    } else {
-        params.delete(e.target.name)
     }
+    // else {
+    //     params.delete(e.target.name)
+    // }
     const appendedParams = params.toString()
+    console.log(appendedParams)
     return appendedParams
 }
 
