@@ -4,11 +4,12 @@ import renderQuiz from './renderQuiz.js'
 
 let quiz
 let answers = []
+const quizContainer = document.querySelector('#quizContainer')
 
-const startQuiz = async () => {
+const startQuiz = async (quizOptionsURL) => {
     const data = await getQuiz(quizOptionsURL)
     if (data.response_code === 1) {
-        document.querySelector('#quizContainer').innerHTML =
+        quizContainer.innerHTML =
             'Unfortunately we could not find any quiz matching your criteria. Please select different option from drop down menu'
         return
     } else {
@@ -20,25 +21,32 @@ const startQuiz = async () => {
     }
 }
 
-const showQuiz = async (e) => {
-    document.querySelector('#quizContainer').innerHTML = ''
-    document.querySelector('.finishedQuizContainer').innerHTML = ''
-    const number = document.querySelector('input[type="number')
-    try {
-        if (number.value < 10 || number.value > 50) {
-            throw 'Please enter a number between 10 and 50'
-        }
-        const loader = document.querySelector('#loader')
-        e.target.disabled = true
-        loader.className = 'loader'
-        await startQuiz()
-        e.target.disabled = false
-        loader.className = ''
-    } catch (err) {
-        const errorText = document.createElement('p')
-        errorText.textContent = err
-        quizContainer.append(errorText)
+const showQuiz = async (e, quizOptionsURL) => {
+    const loader = document.querySelector('#loader')
+    const number = document.querySelector('input[type="number"]')
+    let timeLimit = 0
+    if (number.value > 20 && number.value < 40) {
+        timeLimit += 5000
+        setTimeout(() => {
+            console.log(timeLimit / 1000 + ' ' + 'sec' + ' ' + 'has passed')
+        }, timeLimit)
     }
+    if (number.value >= 40) {
+        timeLimit += 10000
+        setTimeout(() => {
+            console.log(timeLimit + ' ' + 'has passed')
+        }, timeLimit)
+    }
+    e.target.disabled = true
+    loader.className = 'loader'
+    await startQuiz(quizOptionsURL).catch((err) => {
+        const errorElem = document.createElement('p')
+        err.message = 'Unable to fetch quiz'
+        errorElem.textContent = err.message
+        quizContainer.append(errorElem)
+    })
+    loader.className = ''
+    e.target.disabled = false
 }
 
 export default showQuiz

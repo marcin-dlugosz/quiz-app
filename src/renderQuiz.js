@@ -57,7 +57,6 @@ const renderQuiz = (quiz, answers) => {
             showCorrectAnswers(quizContainer, quiz)
         }
     })
-
     prevQuestionBtn.addEventListener('click', () => {
         if (index <= quizLength - 1) {
             answersList.innerHTML = ''

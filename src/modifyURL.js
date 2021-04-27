@@ -8,7 +8,6 @@ const modifyURL = (e, quizUrl) => {
     //     params.delete(e.target.name)
     // }
     const appendedParams = params.toString()
-    console.log(appendedParams)
     return appendedParams
 }
 

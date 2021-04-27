@@ -15,7 +15,7 @@
     </head>
 
     <body>
-        <form id="quizSelection">
+        <form id="quizSelection" novalidity>
             <div id="selectFieldsWrapper" class="select-fields-wrapper">
                 <div class="ui form selection-field">
                     <div class="field">
@@ -119,13 +119,14 @@
                 <div class="btn-container">
 
         
-                    <button type="button" class="ui button newQuiz">start a quiz</button>
+                    <button type="button" id="startQuizBtn" class="ui button newQuiz">start a quiz</button>
                 </div>
         </form>
         <div id="timer">
             <span id="timerText"></span>
         </div>
-        <div id="quizContainer"></div>
+        <div id="quizContainer">
+        </div>
         <div id="loader"><div>
         <div id="myModal" class="modal">
 

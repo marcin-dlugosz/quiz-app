@@ -20,6 +20,8 @@ const createQuizTimer = (quizContainer) => {
     timerText.textContent = remainingTime
     const setTimer = () => {
         timerText.innerHTML = ''
+        clearInterval(interval)
+        
         if (remainingTime !== 0) {
             remainingTime -= 1
             timerText.textContent = remainingTime
@@ -29,11 +31,11 @@ const createQuizTimer = (quizContainer) => {
     }
     const interval = setInterval(setTimer, 1000)
 
-    setTimeout(() => {
-        showTimeoutMsg()
-        timerText.innerHTML = ''
-        quizContainer.innerHTML = ''
-    }, 5001)
+    // setTimeout(() => {
+    //     showTimeoutMsg()
+    //     timerText.innerHTML = ''
+    //     quizContainer.innerHTML = ''
+    // }, 5002)
 }
 
 export default createQuizTimer
