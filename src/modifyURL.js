@@ -4,9 +4,6 @@ const modifyURL = (e, quizUrl) => {
     if (e.target.value !== '') {
         params.set(e.target.name, e.target.value)
     }
-    // else {
-    //     params.delete(e.target.name)
-    // }
     const appendedParams = params.toString()
     return appendedParams
 }

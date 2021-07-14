@@ -8,6 +8,12 @@ const createPossibleAnswersArr = (quiz) => {
         possibleAnswersArr.splice(index, 0, quizObj.correct_answer)
         possibleAnswersArr.forEach((answer) => {
             quizObj.possibleAnswers.push({ name: answer, isChecked: false })
+            
+            if (quizObj.possibleAnswers.length < 3) {
+                if (quizObj.possibleAnswers[0].name === 'False') {
+                    quizObj.possibleAnswers.reverse()
+                }
+            }
         })
     })
 }

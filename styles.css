@@ -12,6 +12,7 @@ ol li {
     margin-bottom: 20px;
     /* border: 1px solid red; */
 }
+
 .selection-field {
     margin-right: 20px;
     margin-left: 20px;
@@ -133,13 +134,12 @@ ol li {
     padding: 20px;
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     animation-name: animatetop;
     animation-duration: 0.5s;
 }
 
 /* Add Animation */
-  
 
 /* The Close Button */
 .close {
@@ -156,7 +156,18 @@ ol li {
     cursor: pointer;
 }
 
-.error::after  {
-  content: 'Choose between 10 and 50';
+.error::after {
+    content: 'Choose between 10 and 50';
     color: red;
+}
+
+.quiz-container {
+    /* display: flex; */
+    margin-top: 30px;
+}
+.fetchError {
+    color: red;
+    font-size: 1.5em;
+    width: 200px;
+    margin: 0 auto;
 }

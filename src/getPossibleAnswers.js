@@ -23,7 +23,7 @@ const getPossibleAnswers = (quiz, index, answers, list) => {
             const answerLabels = Array.from(
                 document.querySelectorAll('li label')
             )
-            
+
             answerLabels.forEach((label) => {
                 // highlight an answer text when specific answer is checked
                 if (e.target.value === label.htmlFor) {
@@ -65,7 +65,6 @@ const getPossibleAnswers = (quiz, index, answers, list) => {
             selectedBtn.setAttribute('checked', 'checked')
         }
     })
-
 }
 
 export default getPossibleAnswers

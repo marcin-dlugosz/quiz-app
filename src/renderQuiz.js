@@ -1,15 +1,15 @@
 import getPossibleAnswers from './getPossibleAnswers.js'
-import calculateDuration from './calculateDuration.js'
-import retrieveCorrectAnswers from './retrieveCorrectAnswers.js'
+import createQuizSummary from './quizResult.js'
+
 import showCorrectAnswers from './showCorrectAnswers.js'
-import createQuizTimer from './timerFunctions.js'
+import { createQuizTimer, timeout, interval } from './timerFunctions.js'
 
 const renderQuiz = (quiz, answers) => {
     let index = 0
     let questionCounter = 1
 
-    const quizStartedAt = Date.now()
     const quizLength = quiz.length
+    const startedAt = Date.now()
 
     // Generate quiz DOM
     const quizContainer = document.querySelector('#quizContainer')
@@ -42,18 +42,10 @@ const renderQuiz = (quiz, answers) => {
             questionText.innerHTML = `${questionCounter}. ${quiz[index].question}`
             getPossibleAnswers(quiz, index, answers, answersList)
         } else {
-            const correctAnswers = retrieveCorrectAnswers(answers)
-            const correctAnswersLength = correctAnswers.length
-            quizContainer.innerHTML = `<p>Your result: ${correctAnswersLength} correct answers out of ${quizLength}</p>
-            <p>Time it took: ${calculateDuration(quizStartedAt)}</p>`
-            if (correctAnswersLength <= 5) {
-                quizContainer.innerHTML =
-                    "Sorry but you didn't answer enough questions"
-            } else if (correctAnswersLength > 5 && correctAnswersLength < 10) {
-                quizContainer.innerHTML = 'Good job! You scored 5 points'
-            } else {
-                quizContainer.innerHTML = 'Well done! You scored 10 points'
-            }
+            clearInterval(interval) // Stopping timer when quiz finished
+            clearTimeout(timeout) // Preventing timeout message from showing when quiz finished
+
+            createQuizSummary(quizLength, answers, startedAt)
             showCorrectAnswers(quizContainer, quiz)
         }
     })

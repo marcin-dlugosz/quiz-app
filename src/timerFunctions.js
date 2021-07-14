@@ -1,10 +1,20 @@
+let timeout
+let interval
+
+const setQuizTimeLimit = () => {
+    const number = document.querySelector('input[type="number"]')
+    let timeLimit = 10000
+    if (number.value > 20 && number.value < 40) {
+        timeLimit += 5000
+    }
+    if (number.value >= 40) {
+        timeLimit += 10000
+    }
+    return timeLimit
+}
+
 const showTimeoutMsg = () => {
     const modal = document.querySelector('#myModal')
-    const contentWrapper = document.querySelector('#contentWrapper')
-    const startQuizBtn = document.createElement('button')
-    startQuizBtn.textContent = 'Start new quiz'
-    startQuizBtn.classList.add('newQuiz', 'close')
-    contentWrapper.append(startQuizBtn)
     const timeoutMsg = document.querySelector('.timeoutMsg')
     modal.style.display = 'block'
     timeoutMsg.textContent = "You've run out of time!"
@@ -12,30 +22,24 @@ const showTimeoutMsg = () => {
         modal.style.display = 'none'
     })
 }
-
-const createQuizTimer = (quizContainer) => {
-
-    let remainingTime = 5
+const createQuizTimer = () => {
+    const timeLimit = setQuizTimeLimit()
+    let remainingTime = timeLimit / 1000
     const timerText = document.querySelector('#timerText')
     timerText.textContent = remainingTime
     const setTimer = () => {
         timerText.innerHTML = ''
-        clearInterval(interval)
-        
         if (remainingTime !== 0) {
             remainingTime -= 1
             timerText.textContent = remainingTime
-        } else {
-            clearInterval(interval)
         }
     }
-    const interval = setInterval(setTimer, 1000)
+    interval = setInterval(setTimer, 1000)
 
-    // setTimeout(() => {
-    //     showTimeoutMsg()
-    //     timerText.innerHTML = ''
-    //     quizContainer.innerHTML = ''
-    // }, 5002)
+    timeout = setTimeout(() => {
+        showTimeoutMsg()
+        timerText.innerHTML = ''
+    }, timeLimit)
 }
 
-export default createQuizTimer
+export { createQuizTimer, timeout, interval }

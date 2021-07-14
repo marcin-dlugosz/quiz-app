@@ -15,10 +15,10 @@ const showCorrectAnswers = (quizContainer, quiz) => {
         getCorrectAnswers(quiz)
     })
 
-    // When the user clicks on <span> (x), close the modal
-    // document.querySelector('.close').addEventListener('click', () => {
-    //     modal.style.display = 'none'
-    // })
+   // When the user clicks on <span> (x), close the modal
+    document.querySelector('.close').addEventListener('click', () => {
+        modal.style.display = 'none'
+    })
 
     // When the user clicks anywhere outside of the modal, close it
     window.addEventListener('click', (e) => {
